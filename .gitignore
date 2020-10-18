@@ -29,3 +29,4 @@ Thumbs.db
 target/
 logs/
 classes/
+/.idea/
