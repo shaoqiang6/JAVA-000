@@ -1,4 +1,4 @@
-package com.shawn.spring;
+package com.spring.loadbean;
 
 import java.util.concurrent.TimeUnit;
 
