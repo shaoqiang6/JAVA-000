@@ -3,6 +3,7 @@ package com.example.demo;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
+import org.redisson.codec.MsgPackJacksonCodec;
 import org.redisson.config.Config;
 
 /**
@@ -27,7 +28,7 @@ public class RedissonClientConfig2 {
 
         private static RedissonClient getClient() {
             Config config = new Config();
-            config.setCodec(new StringCodec());
+            config.setCodec(new MsgPackJacksonCodec());
             config.useSentinelServers().addSentinelAddress(
                     "redis://192.168.252.40:26379",
                     "redis://192.168.252.40:26380",
