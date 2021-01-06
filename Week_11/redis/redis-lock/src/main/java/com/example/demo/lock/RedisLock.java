@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.lock;
 
+import com.example.demo.RedissonClientConfig;
 import org.redisson.api.RBucket;
 import org.redisson.api.RScript;
 import org.redisson.api.RedissonClient;
@@ -22,7 +23,12 @@ public class RedisLock {
         return bucket.trySet("1", timeOut, timeUnit);
     }
 
-    public static boolean release(String lockName) {
+    /**
+     *  使用lua封装 exists && del
+     * @param lockName 锁名
+     * @return 是否成功释放锁
+     */
+    public static boolean unlock(String lockName) {
         String script = "if redis.call('exists',KEYS[1]) == 1 then " +
                 "return redis.call('del',KEYS[1]) else return 0 end";
         RedissonClient client = RedissonClientConfig.getClient();
@@ -51,7 +57,7 @@ public class RedisLock {
         boolean cuiLock = lock(lockName, 300L, TimeUnit.SECONDS);
         System.out.println("=================== cuiLock" + cuiLock);
         TimeUnit.SECONDS.sleep(1L);
-        boolean release = release(lockName);
+        boolean release = unlock(lockName);
         System.out.println("================= release" + release);
         boolean exists = RedissonClientConfig.getClient().getBucket(lockName).isExists();
         System.out.println(exists);
