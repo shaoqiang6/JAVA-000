@@ -65,13 +65,22 @@ public class HttpClientUtil {
 
 
     public static void main(String[] args) {
-        String response = HttpClientUtil.get("http://localhost:8080");
+        String response = HttpClientUtil.get("http://localhost:8080", 3000);
         System.out.println(response);
     }
 
-
     public static String get(String url) {
+        return get(url, 0);
+    }
+
+    public static String get(String url, int socketTimeout) {
         HttpGet httpGet = new HttpGet(url);
+        if (socketTimeout > 0) {
+            httpGet.setConfig(RequestConfig.custom()
+                    .setSocketTimeout(socketTimeout)
+                    .setConnectTimeout(CONNECT_TIMEOUT)
+                    .setConnectionRequestTimeout(CONNECT_TIMEOUT).build());
+        }
         return execute(httpGet);
     }
 
