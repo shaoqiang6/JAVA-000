@@ -1,6 +1,20 @@
 # redis
 基于 Redis 5.0.10 (00000000/0) 64 bit
 
+## 编译安装
+```shell
+root@promotion-test:/usr/local# tar -zxvf redis-5.0.10.tar.gz 
+root@promotion-test:/usr/local# cd redis-5.0.10/
+# 编译
+root@promotion-test:/usr/local/redis-5.0.10# make
+root@promotion-test:/usr/local/redis-5.0.10/src# pwd
+/usr/local/redis-5.0.10/src
+# 进入src目录安装
+root@promotion-test:/usr/local/redis-5.0.10/src# make install
+
+
+```
+
 ## 主从
 
 ### 配置文件修改
@@ -106,7 +120,7 @@ root@redis-center-1:/usr/local/redis# kill -9 1751
 2. server情况
 6381升级为master
 ```shell
-root@mall-center-1:/usr/local/redis# src/redis-cli -p 6381
+root@redis-center-1:/usr/local/redis# src/redis-cli -p 6381
 127.0.0.1:6381> info replication
 # Replication
 role:master
@@ -128,7 +142,7 @@ OK
 3. 重启6380
 6380自动加入到slave中，6381仍然为master
 ```shell
-root@mall-center-1:/usr/local/redis# src/redis-cli -p 6380
+root@redis-center-1:/usr/local/redis# src/redis-cli -p 6380
 127.0.0.1:6380> info replication
 # Replication
 role:slave
@@ -160,3 +174,22 @@ repl_backlog_histlen:2564
 ### 配置文件
 
 ### 命令演示
+```shell
+# 使用官方提供工具来启动一个cluster
+root@promotion-test:/usr/local/redis-5.0.10/utils/create-cluster# pwd
+/usr/local/redis-5.0.10/utils/create-cluster
+root@promotion-test:/usr/local/redis-5.0.10/utils/create-cluster# ./create-cluster 
+```
+
+
+
+
+## 参考
+
+[redis replication/sentinel 博客参考](https://www.cnblogs.com/itzhouq/p/redis5.html)
+
+[redis cluster 博客参考](https://my.oschina.net/ruoli/blog/2252393)
+
+[redis cluster 官方文档](https://redis.io/topics/cluster-tutorial)
+
+[shadow-socks](https://my.oschina.net/u/3163032/blog/1863988)
