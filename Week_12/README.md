@@ -14,6 +14,12 @@ root@promotion-test:/usr/local/redis-5.0.10/src# make install
 
 
 ```
+### 配置文件说明
+```shell
+# 其他host连接时指定这个ip即可连接
+bind 192.168.12.2 
+protected-mode no
+```
 
 ## 主从
 
